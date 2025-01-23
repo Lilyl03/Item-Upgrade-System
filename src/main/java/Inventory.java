@@ -26,11 +26,14 @@ public class Inventory {
 
     public void display(){
         System.out.println("Current Inventory:");
-        for (Item item : itemInventory) {
-            System.out.println("Item name : " + item.getName());
-            System.out.println("Item rarity : " + item.getRarity());
-            System.out.println("Item upgrade count : " + item.getUpgradeCount());
-        }
+        for(Rarity rarity: Rarity.values()){
+            System.out.println(rarity.toString() + " ");
+            for (Item item : itemInventory) {
+                if(item.getRarity().equals(rarity)){
+                    System.out.println("Item name : " + item.getName());
+                    System.out.println("Item rarity : " + item.getRarity());
+                    System.out.println("Item upgrade count : " + item.getUpgradeCount());
+        }}}
     }
     @Override
     public int hashCode() {
