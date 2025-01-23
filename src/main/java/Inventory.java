@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Inventory {
     private List<Item> itemInventory ;
@@ -39,12 +41,19 @@ public class Inventory {
         for(Rarity rarity: Rarity.values()){
             System.out.println(rarity.toString() + "{ ");
             for (Item item : itemInventory) {
-                if(item.getRarity().equals(rarity)){
+                if(item.getRarity().equals(rarity) ){
                     System.out.println("Item name : " + item.getName());
                     System.out.println("Item rarity : " + item.getRarity());
                     System.out.println("Item upgrade count : " + item.getUpgradeCount());
         }}
         System.out.println("}");}
+    }
+
+
+    public Map<Integer, List<Item>> groupItemsByUpgradeCount() {
+        return itemInventory.stream()
+                .filter(item -> item.getRarity() == Rarity.EPIC) // Only consider EPIC items
+                .collect(Collectors.groupingBy(Item::getUpgradeCount));
     }
     @Override
     public int hashCode() {

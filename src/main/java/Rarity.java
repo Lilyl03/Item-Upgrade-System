@@ -23,18 +23,7 @@ public enum Rarity {
             return "Epic";
         }
     },
-    EPIC1(){
-        @Override
-        public String toString() {
-            return "Epic 1";
-        }
-    },
-    EPIC2(){
-        @Override
-        public String toString() {
-            return "Epic 2";
-        }
-    },
+
     LEGENDARY(){
         @Override
         public String toString() {

@@ -13,9 +13,8 @@ public class ItemManagement {
 
     public void upgradeItem(Item item) {
         Rarity currentRarity= item.getRarity();
-        List<Item> sameItems = inventory.getItemsByRarityAndName(item.getRarity(),item.getName());
-        if(!(item.getRarity().equals(Rarity.EPIC1) || item.getRarity().equals(Rarity.EPIC2) ||
-                item.getRarity().equals(Rarity.EPIC)) ) {
+        if(currentRarity != Rarity.EPIC) {
+            List<Item> sameItems = inventory.getItemsByRarityAndName(item.getRarity(),item.getName());
             if( sameItems.size()<3) throw new NotEnoughItemsException("Not enough items for upgrade");
             for (int i = 0; i < 3; i++) {
                 inventory.removeItem(sameItems.get(i));
@@ -35,23 +34,23 @@ public class ItemManagement {
                 default:
                     throw new InvalidUpgradeException("Cannot upgrade item of rarity " + currentRarity + ".");
         }}
-        if ((item.getRarity().equals(Rarity.EPIC1) || item.getRarity().equals(Rarity.EPIC2) ||
-                item.getRarity().equals(Rarity.EPIC)) ){
-            if( sameItems.size()<2) throw new NotEnoughItemsException("Not enough items for upgrade");
-            for(int i=0; i<2;i++)
-                inventory.removeItem(sameItems.get(i));
-            switch (currentRarity) {
-                case EPIC:
-                    item.setRarity(Rarity.EPIC1);
-                    inventory.addItem(item);
-                    break;
-                case EPIC1:
-                    item.setRarity(Rarity.EPIC2);
-                    break;
-                case EPIC2:
-                    item.setRarity(Rarity.LEGENDARY);
-                default:
-                    throw new InvalidUpgradeException("Cannot upgrade item of rarity " + currentRarity + ".");
+        if (item.getRarity().equals(Rarity.EPIC)){
+            Map<Integer, List<Item>> sameItems = inventory.groupItemsByUpgradeCount();
+            if (sameItems.getOrDefault(item.getUpgradeCount(), new ArrayList<>()).size() < 2) {
+                throw new NotEnoughItemsException("Not enough items for upgrade");
+            }
+
+            List<Item> itemsToRemove = sameItems.get(item.getUpgradeCount());
+            for (int i = 0; i < 2; i++) {
+                inventory.removeItem(itemsToRemove.get(i));
+            }
+
+            item.setUpgradeCount(item.getUpgradeCount() + 1);
+
+            inventory.addItem(item);
+            if (item.getUpgradeCount() == 3) {
+                item.setRarity(Rarity.LEGENDARY);
+                item.setUpgradeCount(0);
             }
         }
 
