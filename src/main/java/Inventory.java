@@ -4,7 +4,7 @@ import java.util.List;
 public class Inventory {
     private List<Item> itemInventory ;
 
-    public Inventory(List<Item> itemInventory) {
+    public Inventory() {
         this.itemInventory  = new LinkedList<>();
     }
 
