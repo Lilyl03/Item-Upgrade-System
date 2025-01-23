@@ -1,4 +1,4 @@
-public class NotEnoughItemsException extends Exception{
+public class NotEnoughItemsException extends RuntimeException{
     public NotEnoughItemsException(String message) {
         super(message);
     }

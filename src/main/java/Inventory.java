@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,17 +24,27 @@ public class Inventory {
     public void removeItem(Item item){
         itemInventory.remove(item);
     }
+    public List<Item> getItemsByRarityAndName(Rarity rarity, String name) {
+        List<Item> result = new ArrayList<>();
+        for (Item item : itemInventory) {
+            if (item.getRarity() == rarity && item.getName().equals(name)) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
 
     public void display(){
         System.out.println("Current Inventory:");
         for(Rarity rarity: Rarity.values()){
-            System.out.println(rarity.toString() + " ");
+            System.out.println(rarity.toString() + "{ ");
             for (Item item : itemInventory) {
                 if(item.getRarity().equals(rarity)){
                     System.out.println("Item name : " + item.getName());
                     System.out.println("Item rarity : " + item.getRarity());
                     System.out.println("Item upgrade count : " + item.getUpgradeCount());
-        }}}
+        }}
+        System.out.println("}");}
     }
     @Override
     public int hashCode() {
