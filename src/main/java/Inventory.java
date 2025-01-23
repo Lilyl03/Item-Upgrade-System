@@ -2,10 +2,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Inventory {
-    private List<Item> itemInventory = new LinkedList<>();
+    private List<Item> itemInventory ;
 
     public Inventory(List<Item> itemInventory) {
-        this.itemInventory = itemInventory;
+        this.itemInventory  = new LinkedList<>();
     }
 
     public List<Item> getItemInventory() {
